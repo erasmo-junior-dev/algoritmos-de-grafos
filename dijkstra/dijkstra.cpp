@@ -25,20 +25,19 @@ void dijkstra(ll v0, vector<vector<pair<ll, ll>>> &adj, vector<ll> &dist)
 
     priority_queue<pair<ll, ll>, vector<pair<ll, ll>>, greater<pair<ll, ll>>> pq;
 
-    for (ll v = 0; v < n; v++)
-        pq.push({v, dist[v]});
+    pq.push({dist[v0], v0});
 
     while (!pq.empty())
     {
-        auto v = pq.top();
+        auto [d, v] = pq.top();
         pq.pop();
 
-        for (auto u : adj[v.first])
+        for (auto [w, u] : adj[v])
         {
-            if (dist[u.first] > dist[v.first] + u.second)
+            if (dist[u] > dist[v] + w)
             {
-                dist[u.first] = dist[v.first] + u.second;
-                pq.push({u.first, dist[u.first]});
+                dist[u] = dist[v] + w;
+                pq.push({dist[u], u});
             }
         }
     }
